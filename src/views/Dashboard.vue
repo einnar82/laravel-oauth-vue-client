@@ -1,6 +1,24 @@
 <script setup>
 import { onMounted } from 'vue'
 import { initFlowbite } from 'flowbite'
+import httpClient from '@/client'
+import { useRouter } from 'vue-router'
+
+const token = localStorage.getItem('token');
+const router = useRouter();
+const logout = async () => {
+   try {
+      await httpClient().put('logout', {}, {
+         headers: {
+            'Authorization': `Bearer ${token}`
+         }
+      })
+      router.push('/');
+   } catch (error) {
+      console.log(error.response)
+   }
+ 
+}
 
 // initialize components based on data attribute selectors
 onMounted(() => {
@@ -20,10 +38,7 @@ onMounted(() => {
                <path clip-rule="evenodd" fill-rule="evenodd" d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z"></path>
             </svg>
          </button>
-        <a href="https://flowbite.com" class="flex ml-2 md:mr-24">
-          <img src="https://flowbite.com/docs/images/logo.svg" class="h-8 mr-3" alt="FlowBite Logo" />
-          <span class="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white">Flowbite</span>
-        </a>
+          <span class="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white">OAuth2 Admin</span>
       </div>
       <div class="flex items-center">
           <div class="flex items-center ml-3">
@@ -44,7 +59,12 @@ onMounted(() => {
               </div>
               <ul class="py-1" role="none">
                 <li>
-                  <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">Sign out</a>
+                  <a 
+                     @click="logout"
+                     href="#" 
+                     class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">
+                     Sign out
+                  </a>
                 </li>
               </ul>
             </div>

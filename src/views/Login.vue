@@ -14,7 +14,9 @@ const login = async (evt) => {
     const response = await httpClient().post('login', {
       username: username.value,
       password: password.value
-    })
+    });
+
+    localStorage.setItem('token', response.data.access_token);
     hasError.value = false;
     // window.location.href = 'http://localhost:5174/dashboard';
     router.push({ path: '/dashboard' });
