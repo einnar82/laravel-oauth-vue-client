@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Dashboard from '../views/Dashboard.vue'
 import Login from '../views/Login.vue'
+import PersonalAccessClient from '../views/admin//PersonalAccessClient.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -8,7 +9,14 @@ const router = createRouter({
     {
       path: '/dashboard',
       name: 'dashboard',
-      component: Dashboard
+      redirect: '/dashboard/personal-access-client',
+      component: Dashboard,
+      children: [
+        {
+          component: PersonalAccessClient,
+          path: 'personal-access-client',
+        }
+      ]
     },
     {
       path: '/login',

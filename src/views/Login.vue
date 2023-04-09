@@ -1,7 +1,7 @@
 <script setup>
 import { ref } from 'vue';
 import { useRouter } from 'vue-router'
-import httpClient from '@/client'
+import { httpClient } from '@/client'
 
 const username = ref(null);
 const password = ref(null);
@@ -18,8 +18,7 @@ const login = async (evt) => {
 
     localStorage.setItem('token', response.data.access_token);
     hasError.value = false;
-    // window.location.href = 'http://localhost:5174/dashboard';
-    router.push({ path: '/dashboard' });
+    router.push('/dashboard');
   } catch (error) {
     hasError.value = true;
     console.log(error.response)
